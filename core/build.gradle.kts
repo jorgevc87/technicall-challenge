@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    kotlin("kapt")
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -27,11 +26,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -45,7 +41,7 @@ dependencies {
 
     implementation(project(":data"))
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    annotationProcessor(libs.hilt.compiler)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.gson)
     implementation(libs.gson)
