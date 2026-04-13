@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -37,6 +39,19 @@ android {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
         }
     }
+    packaging {
+        resources {
+            // Excluye los archivos de configuración de procesadores duplicados
+            excludes += "/META-INF/gradle/incremental.annotation.processors"
+            // Opcionalmente, para evitar errores similares con licencias
+            excludes += "/META-INF/LICENSE*"
+            excludes += "/META-INF/NOTICE*"
+            excludes += "/META-INF/DEPENDENCIES"
+        }
+    }
+    sourceSets.configureEach {
+        kotlin.srcDir("build/generated/ksp/$name/kotlin")
+    }
     buildFeatures {
         compose = true
     }
@@ -65,4 +80,5 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.hilt.compiler)
 }
